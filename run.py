@@ -1,10 +1,13 @@
 from app import app
-from app.layout import layout
-from app.callbacks import register_callbacks
+from app.layout import layout  # Import your layout
+from app.callbacks import register_callbacks  # Import callback registration
 
-# Set up the app layout and callbacks
+# Assign the layout
 app.layout = layout
+
+# Register callbacks
 register_callbacks(app)
 
-if __name__ == '__main__':
+# Run the app
+if __name__ == "__main__":
     app.run_server(debug=True)
