@@ -93,21 +93,20 @@ def register_callbacks(app):
             plot_data = pd.concat(all_metrics_df, ignore_index=True)
             plot_data['timestamp'] = pd.to_datetime(plot_data['timestamp'], errors='coerce')
 
-            # Generate plots
             metric_columns = [
                 col for col in plot_data.columns
-                if col not in ['timestamp', 'model', 'metrics_file', 'identifier']
+                if col not in ['epoch', 'identifier', 'model', 'metrics_file', 'timestamp']
             ]
 
             plots = []
             for metric in metric_columns:
                 fig = px.line(
                     plot_data,
-                    x='timestamp',
-                    y=metric,
-                    color='identifier',
-                    title=f"{metric} over Time",
-                    labels={'timestamp': 'Timestamp', metric: metric}
+                    x='epoch',  # Set x-axis to epoch
+                    y=metric,  # Set y-axis to the metric column
+                    color='identifier',  # Different lines for different models/metrics files
+                    title=f"{metric} over Epochs",
+                    labels={'epoch': 'Epoch', metric: metric}  # Labels for x and y axes
                 )
                 # Make the figure smaller to fit two columns
                 fig.update_layout(
@@ -122,7 +121,6 @@ def register_callbacks(app):
                 )
 
             return html.Div(hyperparams_components), html.Div(plots, className="plot-grid")
-
         except Exception as e:
             logging.error(f"Error in update_output: {str(e)}")
             return html.Div(f"Error: {str(e)}"), html.Div()

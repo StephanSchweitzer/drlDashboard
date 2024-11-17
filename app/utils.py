@@ -20,6 +20,12 @@ def get_metrics_files(selected_model_folders, base_directory):
             ])
     return sorted(list(metrics_files))
 
+
+import os
+import pandas as pd
+import json
+
+
 def load_and_combine_data(selected_models, selected_metrics_files, base_directory):
     """Loads and combines metrics and hyperparameters data for selected models and metrics files."""
     data_list = []
@@ -27,15 +33,21 @@ def load_and_combine_data(selected_models, selected_metrics_files, base_director
         model_path = os.path.join(base_directory, model_folder)
         for base_name in selected_metrics_files:
             metrics_path = os.path.join(model_path, "metrics", f"{base_name}.csv")
-            hyperparams_path = os.path.join(model_path, "hyperparameters", f"{base_name}_hyperparameters.csv")
+            hyperparams_path = os.path.join(model_path, "hyperparameters", f"{base_name}_hyperparameters.json")
             if os.path.exists(metrics_path) and os.path.exists(hyperparams_path):
                 try:
                     metrics_df = pd.read_csv(metrics_path)
-                    hyperparams_df = pd.read_csv(hyperparams_path)
+                    with open(hyperparams_path, 'r') as json_file:
+                        hyperparams_data = json.load(json_file)
+                    # Convert hyperparameters JSON into a DataFrame (one row per JSON file)
+                    hyperparams_df = pd.DataFrame([hyperparams_data])
+
                     # Add model and base_name to identify data
                     metrics_df['model'] = model_folder
                     metrics_df['metrics_file'] = base_name
-                    data_list.append({'metrics': metrics_df, 'hyperparams': hyperparams_df, 'model': model_folder, 'metrics_file': base_name})
+                    data_list.append({'metrics': metrics_df, 'hyperparams': hyperparams_df, 'model': model_folder,
+                                      'metrics_file': base_name})
                 except Exception as e:
                     print(f"Error loading data for model {model_folder}, file {base_name}: {e}")
     return data_list
+
