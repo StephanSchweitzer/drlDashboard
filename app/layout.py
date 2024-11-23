@@ -56,6 +56,198 @@ layout = dbc.Container([
                 ], md=6, className="mb-3"),
             ], className="mb-4"),
 
+            # Hyperparameter Filters Section
+            dbc.Row([
+                dbc.Col([
+                    dbc.Card([
+                        dbc.CardHeader("Hyperparameter Filters"),
+                        dbc.CardBody([
+                            dbc.Row([
+                                # Alpha Input Fields
+                                dbc.Col([
+                                    html.Label("Alpha", className="fw-bold"),
+                                    dbc.InputGroup([
+                                        dbc.InputGroupText("Min"),
+                                        dbc.Input(
+                                            id="alpha-min",
+                                            placeholder="0.0",
+                                            type="number",
+                                            min=0.0,
+                                            max=1.0,
+                                            step=0.01,
+                                            value=0.0,
+                                            size="sm",
+                                        ),
+                                        dbc.InputGroupText("Max"),
+                                        dbc.Input(
+                                            id="alpha-max",
+                                            placeholder="1.0",
+                                            type="number",
+                                            min=0.0,
+                                            max=1.0,
+                                            step=0.01,
+                                            value=1.0,
+                                            size="sm",
+                                        ),
+                                    ], className="mb-2", size="sm"),
+                                ], md=2, xs=6, className="mb-3"),
+
+                                # Batch Size Input Fields
+                                dbc.Col([
+                                    html.Label("Batch Size", className="fw-bold"),
+                                    dbc.InputGroup([
+                                        dbc.InputGroupText("Min"),
+                                        dbc.Input(
+                                            id="batch_size-min",
+                                            placeholder="1",
+                                            type="number",
+                                            min=1,
+                                            max=1024,
+                                            step=1,
+                                            value=1,
+                                            size="sm",
+                                        ),
+                                        dbc.InputGroupText("Max"),
+                                        dbc.Input(
+                                            id="batch_size-max",
+                                            placeholder="1024",
+                                            type="number",
+                                            min=1,
+                                            max=1024,
+                                            step=1,
+                                            value=1024,
+                                            size="sm",
+                                        ),
+                                    ], className="mb-2", size="sm"),
+                                ], md=2, xs=6, className="mb-3"),
+
+                                # Gamma Input Fields
+                                dbc.Col([
+                                    html.Label("Gamma", className="fw-bold"),
+                                    dbc.InputGroup([
+                                        dbc.InputGroupText("Min"),
+                                        dbc.Input(
+                                            id="gamma-min",
+                                            placeholder="0.0",
+                                            type="number",
+                                            min=0.0,
+                                            max=1.0,
+                                            step=0.01,
+                                            value=0.0,
+                                            size="sm",
+                                        ),
+                                        dbc.InputGroupText("Max"),
+                                        dbc.Input(
+                                            id="gamma-max",
+                                            placeholder="1.0",
+                                            type="number",
+                                            min=0.0,
+                                            max=1.0,
+                                            step=0.01,
+                                            value=1.0,
+                                            size="sm",
+                                        ),
+                                    ], className="mb-2", size="sm"),
+                                ], md=2, xs=6, className="mb-3"),
+
+                                # Num Episodes Input Fields
+                                dbc.Col([
+                                    html.Label("Num Episodes", className="fw-bold"),
+                                    dbc.InputGroup([
+                                        dbc.InputGroupText("Min"),
+                                        dbc.Input(
+                                            id="num_episodes-min",
+                                            placeholder="1",
+                                            type="number",
+                                            min=1,
+                                            max=10000,
+                                            step=1,
+                                            value=1,
+                                            size="sm",
+                                        ),
+                                        dbc.InputGroupText("Max"),
+                                        dbc.Input(
+                                            id="num_episodes-max",
+                                            placeholder="10000",
+                                            type="number",
+                                            min=1,
+                                            max=10000,
+                                            step=1,
+                                            value=10000,
+                                            size="sm",
+                                        ),
+                                    ], className="mb-2", size="sm"),
+                                ], md=2, xs=6, className="mb-3"),
+
+                                # Replay Capacity Input Fields
+                                dbc.Col([
+                                    html.Label("Replay Capacity", className="fw-bold"),
+                                    dbc.InputGroup([
+                                        dbc.InputGroupText("Min"),
+                                        dbc.Input(
+                                            id="replay_capacity-min",
+                                            placeholder="1",
+                                            type="number",
+                                            min=1,
+                                            max=1000000,
+                                            step=1000,
+                                            value=1,
+                                            size="sm",
+                                        ),
+                                        dbc.InputGroupText("Max"),
+                                        dbc.Input(
+                                            id="replay_capacity-max",
+                                            placeholder="1000000",
+                                            type="number",
+                                            min=1,
+                                            max=1000000,
+                                            step=1000,
+                                            value=1000000,
+                                            size="sm",
+                                        ),
+                                    ], className="mb-2", size="sm"),
+                                ], md=2, xs=6, className="mb-3"),
+
+                                # Start Epsilon Input Fields
+                                dbc.Col([
+                                    html.Label("Start Epsilon", className="fw-bold"),
+                                    dbc.InputGroup([
+                                        dbc.InputGroupText("Min"),
+                                        dbc.Input(
+                                            id="start_epsilon-min",
+                                            placeholder="0.0",
+                                            type="number",
+                                            min=0.0,
+                                            max=1.0,
+                                            step=0.01,
+                                            value=0.0,
+                                            size="sm",
+                                        ),
+                                        dbc.InputGroupText("Max"),
+                                        dbc.Input(
+                                            id="start_epsilon-max",
+                                            placeholder="1.0",
+                                            type="number",
+                                            min=0.0,
+                                            max=1.0,
+                                            step=0.01,
+                                            value=1.0,
+                                            size="sm",
+                                        ),
+                                    ], className="mb-2", size="sm"),
+                                ], md=2, xs=6, className="mb-3"),
+                            ]),
+                            dbc.Button(
+                                "Apply Filters",
+                                id="apply-filters-button",
+                                color="primary",
+                                className="mt-3"
+                            )
+                        ])
+                    ])
+                ], width=12)
+            ], className="mb-4"),
+
             # Results Section
             dbc.Row([
                 # Hyperparameters Section
