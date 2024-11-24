@@ -21,6 +21,16 @@ logging.basicConfig(
 BASE_DIRECTORY = "../reinforcement_learning_project_IABD/logs"
 
 
+def check_hyperparameter(param_name, value, min_value, max_value):
+    if value is None:
+        print(f"problem with {param_name} {value}")
+        return True  # Skip if the hyperparameter is missing
+    if min_value is not None and value < min_value:
+        return False
+    if max_value is not None and value > max_value:
+        return False
+    return True
+
 def register_callbacks(app):
     # First callback: Update model folder options
     @app.callback(
@@ -46,7 +56,7 @@ def register_callbacks(app):
             State('gamma-max', 'value'),
             State('num_episodes-min', 'value'),
             State('num_episodes-max', 'value'),
-            State('replay_capacity-min', 'value'),
+            State('replay_capacity-min-test', 'value'),
             State('replay_capacity-max', 'value'),
             State('start_epsilon-min', 'value'),
             State('start_epsilon-max', 'value')
@@ -73,15 +83,14 @@ def register_callbacks(app):
         # Initialize an empty set for metrics files
         metrics_files = set()
 
-        # Define a helper function to check hyperparameter values
-        def check_hyperparameter(param_name, value, min_value, max_value):
-            if value is None:
-                return True  # Skip if the hyperparameter is missing
-            if min_value is not None and value < min_value:
-                return False
-            if max_value is not None and value > max_value:
-                return False
-            return True
+        logging.info("All input values:")
+        logging.info(f"Model folders: {selected_model_folders}")
+        logging.info(f"Alpha: {alpha_min} - {alpha_max}")
+        logging.info(f"Batch size: {batch_size_min} - {batch_size_max}")
+        logging.info(f"Gamma: {gamma_min} - {gamma_max}")
+        logging.info(f"Num episodes: {num_episodes_min} - {num_episodes_max}")
+        logging.info(f"Replay capacity: {replay_capacity_min} - {replay_capacity_max}")
+        logging.info(f"Start epsilon: {start_epsilon_min} - {start_epsilon_max}")
 
         # Iterate over selected model folders
         for model_folder in selected_model_folders:
